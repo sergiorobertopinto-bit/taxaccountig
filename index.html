@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Escritório Sumaúma Contábil</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <img
+            class="ufma-logo"
+            src="assets/logo-ufma.png"
+            alt="Logo da UFMA"
+          />
+          <div>
+            <p class="eyebrow">Tax Accounting - UFMA</p>
+            <h1>Escritório Sumaúma Contábil</h1>
+          </div>
+        </div>
+        <div class="team-box">
+          <label for="teamName">Equipe</label>
+          <input id="teamName" type="text" placeholder="Nome da equipe" maxlength="40" />
+          <button id="saveTeamBtn" class="ghost-btn" type="button">Entrar</button>
+          <button id="soundBtn" class="ghost-btn sound-btn" type="button">Som: off</button>
+          <button id="restartBtn" class="ghost-btn" type="button" title="Recomeçar campanha">Recomeçar</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="tag">São Luís, Maranhão</p>
+            <h2>Atenda clientes improváveis, escolha regimes lícitos e faça o escritório crescer.</h2>
+            <p>
+              Compare Simples Nacional, Lucro Presumido, Lucro Real, riscos de Lucro Arbitrado e a transição
+              para IBS/CBS. Cada decisão mexe com caixa, reputação e conformidade.
+            </p>
+            <div class="audio-panel">
+              <button id="startVideoBtn" class="primary-btn" type="button">▶ Assistir vídeo do cliente</button>
+              <button id="pauseVideoBtn" class="ghost-btn" type="button">Pausar vídeo</button>
+              <button id="bigSoundBtn" class="ghost-btn" type="button">Ativar som ambiente</button>
+            </div>
+          </div>
+          <div id="caseVisual" class="case-visual" aria-label="Cenário visual do caso">
+            <video id="clientVideo" class="client-video" playsinline controls preload="metadata"></video>
+            <img id="clientGif" class="client-gif" alt="Vídeo animado do cliente" />
+            <div id="videoPlaceholder" class="video-placeholder">
+              <strong>Vídeo IA do cliente</strong>
+              <span>Adicione o MP4 deste nível em <code>assets/videos/</code> para substituir a imagem.</span>
+            </div>
+            <div id="speechBubble" class="speech-bubble"></div>
+            <div class="voice-bars" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="video-hud" aria-hidden="true">
+              <span class="rec-dot"></span>
+              <span>Cliente ao vivo</span>
+            </div>
+            <div class="visual-overlay">
+              <span id="visualPlace"></span>
+              <strong id="visualTitle"></strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="dashboard" aria-label="Painel do jogo">
+          <article class="metric">
+            <span>Moedas do escritório</span>
+            <strong id="coins">0</strong>
+          </article>
+          <article class="metric">
+            <span>Reputação</span>
+            <strong id="reputation">0</strong>
+          </article>
+          <article class="metric">
+            <span>Conformidade</span>
+            <strong id="compliance">0</strong>
+          </article>
+          <article class="metric">
+            <span>Clientes ativos</span>
+            <strong id="clients">0</strong>
+          </article>
+          <article class="metric">
+            <span>Equipe atual</span>
+            <strong id="currentTeam">Sem equipe</strong>
+          </article>
+        </section>
+
+        <section class="game-grid">
+          <aside class="level-panel">
+            <div class="section-title">
+              <div>
+                <p class="eyebrow">Campanha</p>
+                <h3>Níveis</h3>
+              </div>
+            </div>
+            <div id="levelList" class="level-list"></div>
+          </aside>
+
+          <section class="case-panel" aria-live="polite">
+            <div class="case-header">
+              <div>
+                <p id="caseDifficulty" class="tag"></p>
+                <h3 id="caseTitle"></h3>
+              </div>
+              <div id="caseBadge" class="case-badge"></div>
+            </div>
+
+            <div class="character-card">
+              <div id="avatar" class="avatar"></div>
+              <div>
+                <strong id="characterName"></strong>
+                <p id="characterLine"></p>
+              </div>
+            </div>
+
+            <div class="interaction-card">
+              <button id="talkBtn" class="ghost-btn" type="button">Conversar com o cliente</button>
+              <p id="interactionLine"></p>
+            </div>
+
+            <p id="caseStory" class="case-story"></p>
+
+            <div class="data-grid" id="caseData"></div>
+
+            <div class="tabs" role="tablist" aria-label="Informações do caso">
+              <button class="tab active" type="button" data-tab="calc">Cálculos</button>
+              <button class="tab" type="button" data-tab="options">Decisões</button>
+              <button class="tab" type="button" data-tab="reform">Cenário 2033</button>
+            </div>
+
+            <div id="calcTab" class="tab-panel"></div>
+            <div id="optionsTab" class="tab-panel hidden"></div>
+            <div id="reformTab" class="tab-panel hidden"></div>
+
+            <div id="feedback" class="feedback hidden"></div>
+
+            <div class="case-actions">
+              <button id="prevBtn" class="ghost-btn hidden" type="button">Caso anterior</button>
+              <button id="nextBtn" class="primary-btn" type="button">Próximo caso</button>
+            </div>
+          </section>
+        </section>
+
+        <section class="teacher-panel professor-panel">
+          <div class="section-title">
+            <div>
+              <p class="eyebrow">Ambiente do professor(a)</p>
+              <h3>Acompanhamento da turma</h3>
+            </div>
+            <div class="report-actions">
+              <input id="teacherCode" class="teacher-code" type="password" placeholder="Código do professor" />
+              <button id="unlockTeacherBtn" class="ghost-btn" type="button">Abrir painel</button>
+              <button id="exportCsvBtn" class="ghost-btn" type="button">Exportar CSV</button>
+              <button id="exportJsonBtn" class="ghost-btn" type="button">Exportar JSON</button>
+              <button id="exportHtmlBtn" class="ghost-btn" type="button">Relatório com gráficos</button>
+              <button id="clearReportsBtn" class="ghost-btn danger" type="button">Limpar relatórios</button>
+            </div>
+          </div>
+          <div class="teacher-grid">
+            <p>Os valores são simplificados para aprendizagem: servem para raciocinar sobre carga, margem, risco e obrigações.</p>
+            <p>Ao errar, o feedback mostra o motivo: imposto maior, perda de créditos, obrigação acessória ignorada ou risco de arbitramento.</p>
+            <p>O painel registra equipe, caso, decisão, pontuação e horário para conferência do professor.</p>
+          </div>
+          <div class="scoreboard-wrap">
+            <h3>Painel de rendimento das equipes</h3>
+            <div id="scoreboard" class="scoreboard"></div>
+          </div>
+          <p id="teacherLockMsg" class="teacher-lock">Digite a senha do professor para visualizar respostas, gabaritos, gráficos e exportações.</p>
+          <div id="teacherRoom" class="teacher-room hidden">
+            <div class="teacher-room-grid">
+              <article>
+                <span>Equipes monitoradas</span>
+                <strong id="teacherTeams">0</strong>
+              </article>
+              <article>
+                <span>Decisões corretas</span>
+                <strong id="teacherCorrect">0</strong>
+              </article>
+              <article>
+                <span>Cálculos conferidos</span>
+                <strong id="teacherCalcs">0</strong>
+              </article>
+            </div>
+            <div id="teacherCharts" class="teacher-charts"></div>
+          </div>
+          <div id="teacherDetailWrap" class="scoreboard-wrap hidden">
+            <h3>Relatório detalhado das ações</h3>
+            <div id="reportTable" class="report-table"></div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <p>
+          Subsídios legislações Pertinentes:
+          <a href="https://planalto.gov.br/ccivil_03/Leis/LCP/Lcp214.htm">LC 214/2025</a>,
+          <a href="https://www.planalto.gov.br/ccivil_03/LEIS/LCP/Lcp227.htm">LC 227/2026</a>,
+          <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/d12955.htm">Decreto 12.955/2026</a> e
+          <a href="https://www.cgibs.gov.br/resolucoes">Resolução CGIBS 6/2026</a>.
+        </p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
